@@ -35,3 +35,16 @@ function operate(num1, num2, operator) {
 
   }
 }
+
+const numbers = document.querySelectorAll("#number button");
+const operators = document.querySelectorAll("#operator button");
+const display = document.querySelector("#display");
+
+// Adds parameter to the display
+function displayNumber(number) {
+  return display.textContent += number;
+}
+
+numbers.forEach((number) => {
+  number.addEventListener("click", () => displayNumber(number.textContent));
+});
