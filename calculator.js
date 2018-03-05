@@ -37,27 +37,47 @@ function operate(num1, num2, operator) {
 }
 
 const numbers = document.querySelectorAll("#number button");
-const operators = document.querySelectorAll("#operator button");
+const operators = document.querySelectorAll("#operator button:not(#equal):not(#clear)");
 const display = document.querySelector("#display");
+const equal = document.querySelector("#equal");
+const clear = document.querySelector("#clear");
 let number1;
 let opSymbol;
 
-// Adds parameter to the display
-function displayNumber(number) {
+function updateDisplay(number) {
   return display.textContent += number;
+}
+
+function resetDisplay() {
+  return display.textContent = "";
 }
 
 //Stores previous number and operator, reset the display
 function storeFirstPart(num1, operator) {
-  number1 = num1;
+  number1 = Number(num1);
   opSymbol = operator;
+  resetDisplay();
+}
+
+function doTheMath(num1, num2, operator){
+  resetDisplay();
+  let result = operate(number1, num2, operator);
+  if (num1 || num2 || operator) {updateDisplay(result);}
+  else {updateDisplay("ERROR");}
 }
 
 numbers.forEach((number) => {
-  number.addEventListener("click", () => displayNumber(number.textContent));
+  number.addEventListener("click", () => updateDisplay(number.textContent));
 });
 
-//Stores previous number and operator, reset the display
 operators.forEach((operator) => {
   operator.addEventListener("click", () => storeFirstPart(display.textContent, operator.textContent));
+});
+
+equal.addEventListener("click", () => doTheMath(number1, Number(display.textContent), opSymbol));
+
+clear.addEventListener("click", function(){
+  resetDisplay();
+  number1 = "";
+  operator = "";
 });
