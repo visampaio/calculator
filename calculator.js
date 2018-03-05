@@ -39,12 +39,25 @@ function operate(num1, num2, operator) {
 const numbers = document.querySelectorAll("#number button");
 const operators = document.querySelectorAll("#operator button");
 const display = document.querySelector("#display");
+let number1;
+let opSymbol;
 
 // Adds parameter to the display
 function displayNumber(number) {
   return display.textContent += number;
 }
 
+//Stores previous number and operator, reset the display
+function storeFirstPart(num1, operator) {
+  number1 = num1;
+  opSymbol = operator;
+}
+
 numbers.forEach((number) => {
   number.addEventListener("click", () => displayNumber(number.textContent));
+});
+
+//Stores previous number and operator, reset the display
+operators.forEach((operator) => {
+  operator.addEventListener("click", () => storeFirstPart(display.textContent, operator.textContent));
 });
